@@ -41,13 +41,13 @@ export class K8ClusterStack extends cdk.Stack {
       vpcSubnets: [{ subnetType: ec2.SubnetType.PRIVATE_WITH_EGRESS }],
       defaultCapacity: 0,
       mastersRole: this.clusterAdminRole,
-      clusterLogging: isProd
-        ? [
-            eks.ClusterLoggingTypes.API,
-            eks.ClusterLoggingTypes.AUDIT,
-            eks.ClusterLoggingTypes.AUTHENTICATOR,
-          ]
-        : [],
+      ...(isProd && {
+        clusterLogging: [
+          eks.ClusterLoggingTypes.API,
+          eks.ClusterLoggingTypes.AUDIT,
+          eks.ClusterLoggingTypes.AUTHENTICATOR,
+        ],
+      }),
     });
 
     // --- Managed Node Group ---
