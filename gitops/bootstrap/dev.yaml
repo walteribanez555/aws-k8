@@ -1,0 +1,25 @@
+# Root Application (app-of-apps) for the dev environment.
+# Apply once after ArgoCD is installed:
+#   kubectl apply -f gitops/bootstrap/dev.yaml -n argocd
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: root-dev
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/YOUR_ORG/YOUR_REPO   # <-- update this
+    targetRevision: HEAD
+    path: gitops/apps/dev
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

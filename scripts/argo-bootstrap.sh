@@ -46,3 +46,16 @@ else
   echo "  argocd CLI not found. Install it to manage apps from the terminal:"
   echo "  brew install argocd"
 fi
+
+# Apply the root app-of-apps bootstrap manifest
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+BOOTSTRAP_MANIFEST="${SCRIPT_DIR}/../gitops/bootstrap/${ENVIRONMENT}.yaml"
+
+if [[ -f "${BOOTSTRAP_MANIFEST}" ]]; then
+  echo ""
+  echo "==> Applying root app-of-apps: gitops/bootstrap/${ENVIRONMENT}.yaml"
+  kubectl apply -f "${BOOTSTRAP_MANIFEST}" -n argocd
+  echo "  ArgoCD will now sync all apps defined in gitops/apps/${ENVIRONMENT}/"
+else
+  echo "  (no bootstrap manifest found at gitops/bootstrap/${ENVIRONMENT}.yaml)"
+fi

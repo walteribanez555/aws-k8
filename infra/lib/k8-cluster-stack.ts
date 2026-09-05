@@ -1,3 +1,4 @@
+import { KubectlV31Layer } from "@aws-cdk/lambda-layer-kubectl-v31";
 import * as cdk from "aws-cdk-lib";
 import * as ec2 from "aws-cdk-lib/aws-ec2";
 import * as ecr from "aws-cdk-lib/aws-ecr";
@@ -35,6 +36,7 @@ export class K8ClusterStack extends cdk.Stack {
     this.cluster = new eks.Cluster(this, "Cluster", {
       clusterName: `${projectName}-cluster-${environment}`,
       version: eks.KubernetesVersion.V1_31,
+      kubectlLayer: new KubectlV31Layer(this, "KubectlLayer"),
       vpc,
       vpcSubnets: [{ subnetType: ec2.SubnetType.PRIVATE_WITH_EGRESS }],
       defaultCapacity: 0,
