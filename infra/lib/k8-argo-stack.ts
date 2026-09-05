@@ -29,6 +29,7 @@ export class K8ArgoStack extends cdk.Stack {
     // --- ArgoCD via Helm (chart: argo-cd, repo: argoproj.github.io/argo-helm) ---
     cluster.addHelmChart("ArgoCD", {
       chart: "argo-cd",
+      release: "argocd",
       repository: "https://argoproj.github.io/argo-helm",
       namespace: "argocd",
       createNamespace: true,
