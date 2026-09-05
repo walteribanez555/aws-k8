@@ -1,0 +1,29 @@
+{
+  "name": "k8",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*",
+    "infra"
+  ],
+  "scripts": {
+    "build": "turbo run build",
+    "clean": "turbo run clean",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "type-check": "turbo run type-check",
+    "infra:synth": "npm run synth --workspace=infra",
+    "infra:diff": "npm run diff --workspace=infra",
+    "infra:deploy:dev": "npm run deploy:dev --workspace=infra",
+    "infra:deploy:prod": "npm run deploy:prod --workspace=infra",
+    "infra:destroy": "npm run destroy --workspace=infra"
+  },
+  "devDependencies": {
+    "@trivago/prettier-plugin-sort-imports": "^5.2.2",
+    "@types/node": "^20.17.52",
+    "cross-env": "^10.1.0",
+    "turbo": "^2.6.1",
+    "typescript": "^5.8.3"
+  },
+  "packageManager": "npm@10.8.2"
+}

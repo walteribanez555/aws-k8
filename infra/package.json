@@ -1,0 +1,36 @@
+{
+  "name": "infra",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf cdk.out dist",
+    "watch": "tsc -w",
+    "cdk": "cdk",
+    "deploy:dev": "cdk deploy --context environment=dev --all",
+    "deploy:prod": "cdk deploy --context environment=prod --all",
+    "diff": "cdk diff",
+    "synth": "cdk synth",
+    "destroy": "cdk destroy --all"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "type": "commonjs",
+  "dependencies": {
+    "aws-cdk-lib": "^2.268.0",
+    "constructs": "^10.8.1"
+  },
+  "devDependencies": {
+    "@types/node": "^26.4.1",
+    "aws-cdk": "^2.1140.0",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.23.13",
+    "typescript": "^7.0.2"
+  }
+}
