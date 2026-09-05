@@ -12,6 +12,7 @@ interface K8ClusterStackProps extends cdk.StackProps {
 
 export class K8ClusterStack extends cdk.Stack {
   public readonly cluster: eks.Cluster;
+  public readonly clusterAdminRole: iam.Role;
 
   constructor(scope: Construct, id: string, props: K8ClusterStackProps) {
     super(scope, id, props);
@@ -25,7 +26,7 @@ export class K8ClusterStack extends cdk.Stack {
     cdk.Tags.of(this).add("ManagedBy", "CDK");
 
     // --- IAM role for cluster admin access ---
-    const clusterAdminRole = new iam.Role(this, "ClusterAdminRole", {
+    this.clusterAdminRole = new iam.Role(this, "ClusterAdminRole", {
       roleName: `${projectName}-cluster-admin-${environment}`,
       assumedBy: new iam.AccountRootPrincipal(),
     });
@@ -37,7 +38,7 @@ export class K8ClusterStack extends cdk.Stack {
       vpc,
       vpcSubnets: [{ subnetType: ec2.SubnetType.PRIVATE_WITH_EGRESS }],
       defaultCapacity: 0,
-      mastersRole: clusterAdminRole,
+      mastersRole: this.clusterAdminRole,
       clusterLogging: isProd
         ? [
             eks.ClusterLoggingTypes.API,
@@ -91,7 +92,7 @@ export class K8ClusterStack extends cdk.Stack {
     });
 
     new cdk.CfnOutput(this, "ClusterAdminRoleArn", {
-      value: clusterAdminRole.roleArn,
+      value: this.clusterAdminRole.roleArn,
       description: "IAM role ARN with cluster admin access — assume this to run kubectl",
       exportName: `${projectName}-${environment}-cluster-admin-role-arn`,
     });

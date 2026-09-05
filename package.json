@@ -16,7 +16,12 @@
     "infra:diff": "npm run diff --workspace=infra",
     "infra:deploy:dev": "npm run deploy:dev --workspace=infra",
     "infra:deploy:prod": "npm run deploy:prod --workspace=infra",
-    "infra:destroy": "npm run destroy --workspace=infra"
+    "infra:destroy": "npm run destroy --workspace=infra",
+    "argo:bootstrap": "bash scripts/argo-bootstrap.sh",
+    "argo:bootstrap:prod": "bash scripts/argo-bootstrap.sh prod",
+    "argo:ui": "bash scripts/argo-ui.sh",
+    "argo:ui:prod": "bash scripts/argo-ui.sh prod",
+    "argo:add-app": "bash scripts/argo-add-app.sh"
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^5.2.2",
