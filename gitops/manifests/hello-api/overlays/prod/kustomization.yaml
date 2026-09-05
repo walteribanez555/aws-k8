@@ -1,0 +1,26 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: hello-api
+resources:
+  - ../../base
+patches:
+  - patch: |-
+      - op: replace
+        path: /spec/replicas
+        value: 2
+      - op: replace
+        path: /spec/template/spec/containers/0/image
+        value: 557690620729.dkr.ecr.us-east-1.amazonaws.com/k8-app-prod:latest
+      - op: add
+        path: /spec/template/spec/containers/0/env/-
+        value:
+          name: ENV
+          value: prod
+      - op: add
+        path: /spec/template/spec/containers/0/env/-
+        value:
+          name: VERSION
+          value: "1.0.0"
+    target:
+      kind: Deployment
+      name: hello-api

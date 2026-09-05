@@ -21,7 +21,9 @@
     "argo:bootstrap:prod": "bash scripts/argo-bootstrap.sh prod",
     "argo:ui": "bash scripts/argo-ui.sh",
     "argo:ui:prod": "bash scripts/argo-ui.sh prod",
-    "argo:add-app": "bash scripts/argo-add-app.sh"
+    "argo:add-app": "bash scripts/argo-add-app.sh",
+    "docker:push": "bash scripts/build-push.sh",
+    "docker:push:hello-api": "bash scripts/build-push.sh hello-api"
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^5.2.2",
