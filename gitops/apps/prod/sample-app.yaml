@@ -8,7 +8,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/YOUR_ORG/YOUR_REPO   # <-- update this
+    repoURL: https://github.com/walteribanez555/aws-k8
     targetRevision: HEAD
     path: gitops/manifests/sample-app/overlays/prod
   destination:
