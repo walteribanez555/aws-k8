@@ -18,19 +18,15 @@ echo "==> Authenticating with ECR..."
 aws ecr get-login-password --region "${REGION}" \
   | docker login --username AWS --password-stdin "${ACCOUNT}.dkr.ecr.${REGION}.amazonaws.com"
 
-echo "==> Building image: ${REPO}:${TAG}"
-docker build \
+echo "==> Building image for linux/amd64: ${REPO}:${TAG}"
+docker buildx build \
+  --platform linux/amd64 \
   --build-arg ENV="${ENVIRONMENT}" \
   --build-arg VERSION="${VERSION}" \
   -t "${REPO}:${TAG}" \
+  -t "${REPO}:${ENVIRONMENT}-latest" \
+  --push \
   "apps/${APP}"
-
-echo "==> Pushing image..."
-docker push "${REPO}:${TAG}"
-
-# Also tag as <env>-latest
-docker tag "${REPO}:${TAG}" "${REPO}:${ENVIRONMENT}-latest"
-docker push "${REPO}:${ENVIRONMENT}-latest"
 
 echo ""
 echo "  Image pushed: ${REPO}:${TAG}"
